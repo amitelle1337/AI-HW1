@@ -4,7 +4,7 @@ $ python stats.py
 '''
 
 from collections import namedtuple
-from ways import load_map_from_csv
+from ways import load_map_from_csv, info
 
 
 def map_statistics(roads):
@@ -22,8 +22,13 @@ def map_statistics(roads):
     max_distance = float('-inf')
     min_distance = float('inf')
 
+    road_info_type_map = {}
+    for road_type in info.ROAD_TYPES:
+        road_info_type_map[road_type] = 0
+
     for j in roads.values():
         for link in j.links:
+            road_info_type_map[info.ROAD_TYPES[link.highway_type]] += 1
             max_distance = max(max_distance, link.distance)
             min_distance = min(min_distance, link.distance)
             total_distance += link.distance
@@ -40,7 +45,7 @@ def map_statistics(roads):
         'Link distance': Stat(max=max_distance, min=min_distance, avg=(total_distance / num_of_links)),
         # value should be a dictionary
         # mapping each road_info.TYPE to the no' of links of this type
-        'Link type histogram': None,  # tip: use collections.Counter
+        'Link type histogram': road_info_type_map,  # tip: use collections.Counter
     }
 
 

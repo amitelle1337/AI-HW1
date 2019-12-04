@@ -10,3 +10,6 @@ class Node(object):
             path.append(curr.state)
             curr = curr.parent
         return path[::-1]
+
+    def __str__(self):
+        return str(self.state) + self.parent

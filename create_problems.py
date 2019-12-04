@@ -1,3 +1,4 @@
+import sys
 from collections import deque
 import random
 
@@ -35,7 +36,7 @@ def bfs_start_goal(roads, start, goal):
     return None
 
 
-def bfs_rand_goal(roads, start, rand_threshhold=10000):
+def bfs_rand_goal(roads, start, rand_threshhold=10000, rand_count=1):
     open = deque([Node(start)])
     close = set()
     while open and (len(open) + len(close) <= rand_threshhold):
@@ -46,8 +47,14 @@ def bfs_rand_goal(roads, start, rand_threshhold=10000):
             if s not in close and not find_state(s, open):
                 new = Node(s, next_node)
                 open.append(new)
-
-    return None
+    rand_goals = []
+    seen = list(open) + list(close)
+    random.seed(None)
+    for i in range(rand_count):
+        pos = random.randint(0, len(seen) - 1)
+        rand_goals.append(seen[pos])
+        seen.remove(seen[pos])
+    return rand_goals
 
 
 def find_state(state, node_list):
@@ -63,6 +70,4 @@ if __name__ == '__main__':
     assert len(argv) == 1
     roads = load_map_from_csv()
     s = random.randint(0, len(roads))
-    t = random.randint(0, len(roads))
-    print(s, t)
-    print(bfs_start_goal(roads, s, t))
+    print(bfs_rand_goal(roads, s, rand_count=4))

@@ -35,6 +35,21 @@ def bfs_start_goal(roads, start, goal):
     return None
 
 
+def bfs_rand_goal(roads, start, rand_threshhold=10000):
+    open = deque([Node(start)])
+    close = set()
+    while open and (len(open) + len(close) <= rand_threshhold):
+        next_node = open.popleft()
+        close.add(next_node.state)
+        for link in roads[next_node.state].links:
+            s = link.target
+            if s not in close and not find_state(s, open):
+                new = Node(s, next_node)
+                open.append(new)
+
+    return None
+
+
 def find_state(state, node_list):
     for node in node_list:
         if node.state is state:

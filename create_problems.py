@@ -69,5 +69,9 @@ if __name__ == '__main__':
 
     assert len(argv) == 1
     roads = load_map_from_csv()
-    s = random.randint(0, len(roads))
-    print(bfs_rand_goal(roads, s, rand_count=4))
+    num_problems = 100
+    rand_count = 4
+    for i in range(num_problems//rand_count):
+        s = random.randint(0, len(roads))
+        for t in bfs_rand_goal(roads, s, rand_count=4):
+            print(s, t)

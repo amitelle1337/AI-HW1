@@ -1,54 +1,48 @@
-import sys
 from collections import deque
 import random
 
+from roads_problem import RoadsProblem
 from node import Node
 from ways import load_map_from_csv
 
 
-def bfs_span_tree(roads, start):
-    open = deque([Node(start)])
-    close = set()
-    while open:
-        next_node = open.popleft()
-        close.add(next_node.state)
-        for link in roads[next_node.state].links:
-            s = link.target
-            if s not in close and not find_state(s, open):
-                new = Node(s, next_node)
-                open.append(new)
-    return close
+def bfs_span_tree(problem):
+    frontier = deque([Node(problem.s_start)])  # FIFO queue
+    closed_list = set()
+    while frontier:
+        node = frontier.popleft()
+        closed_list.add(node.state)
+        for child in node.expand(problem):
+            if child.state not in closed_list and child not in frontier:
+                frontier.append(child)
+    return closed_list
 
 
-def bfs_start_goal(roads, start, goal):
-    open = deque([Node(start)])
-    close = set()
-    while open:
-        next_node = open.popleft()
-        if next_node.state is goal:
-            return next_node.solution()
-        close.add(next_node.state)
-        for link in roads[next_node.state].links:
-            s = link.target
-            if s not in close and not find_state(s, open):
-                new = Node(s, next_node)
-                open.append(new)
+def breadth_first_graph_search(problem):
+    frontier = deque([Node(problem.s_start)])  # FIFO queue
+    closed_list = set()
+    while frontier:
+        node = frontier.popleft()
+        if problem.is_goal(node.state):
+            return node.solution()
+        closed_list.add(node.state)
+        for child in node.expand(problem):
+            if child.state not in closed_list and child not in frontier:
+                frontier.append(child)
     return None
 
 
-def bfs_rand_goal(roads, start, rand_threshhold=10000, rand_count=1):
-    open = deque([Node(start)])
-    close = set()
-    while open and (len(open) + len(close) <= rand_threshhold):
-        next_node = open.popleft()
-        close.add(next_node.state)
-        for link in roads[next_node.state].links:
-            s = link.target
-            if s not in close and not find_state(s, open):
-                new = Node(s, next_node)
-                open.append(new)
+def bfs_rand_goal(problem, rand_threshhold=200, rand_count=1):
+    frontier = deque([Node(problem.s_start)])  # FIFO queue
+    closed_list = set()
+    while frontier and len(frontier) + len(closed_list) < rand_threshhold:
+        node = frontier.popleft()
+        closed_list.add(node.state)
+        for child in node.expand(problem):
+            if child.state not in closed_list and child not in frontier:
+                frontier.append(child)
     rand_goals = []
-    seen = [node.state for node in open] + list(close)
+    seen = [node.state for node in frontier] + list(closed_list)
     random.seed(None)
     for _ in range(rand_count):
         pos = random.randint(0, len(seen) - 1)
@@ -70,9 +64,10 @@ if __name__ == '__main__':
     assert len(argv) == 1
     roads = load_map_from_csv()
     num_problems = 100
-    rand_count = 4
+    rand_count = 2
     with open('problems.csv', 'w+') as f:
         for i in range(num_problems // rand_count):
             s = random.randint(0, len(roads))
-            for t in bfs_rand_goal(roads, s, rand_count=2):
+            prob = RoadsProblem(roads, s)
+            for t in bfs_rand_goal(prob, rand_count=rand_count):
                 f.write(str(s) + ',' + str(t) + '\n')

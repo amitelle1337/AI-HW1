@@ -4,13 +4,14 @@ Don't use this file for the actual work; only minimal code should be here.
 We just parse input and call methods from other modules.
 '''
 
-#do NOT import ways. This should be done from other files
-#simply import your modules and call the appropriate functions
+# do NOT import ways. This should be done from other files
+# simply import your modules and call the appropriate functions
+import algs
 
 
 def find_ucs_rout(source, target):
     'call function to find path, and return list of indices'
-    raise NotImplementedError
+    return algs.find_ucs_route(source, target, f=lambda node: node.path_cost)
 
 
 def find_astar_route(source, target):
@@ -21,7 +22,7 @@ def find_astar_route(source, target):
 def find_idastar_route(source, target):
     'call function to find path, and return list of indices'
     raise NotImplementedError
-    
+
 
 def dispatch(argv):
     from sys import argv
@@ -37,4 +38,5 @@ def dispatch(argv):
 
 if __name__ == '__main__':
     from sys import argv
+
     dispatch(argv)

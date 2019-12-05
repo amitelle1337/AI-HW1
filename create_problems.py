@@ -48,9 +48,9 @@ def bfs_rand_goal(roads, start, rand_threshhold=10000, rand_count=1):
                 new = Node(s, next_node)
                 open.append(new)
     rand_goals = []
-    seen = list(open) + list(close)
+    seen = [node.state for node in open] + list(close)
     random.seed(None)
-    for i in range(rand_count):
+    for _ in range(rand_count):
         pos = random.randint(0, len(seen) - 1)
         rand_goals.append(seen[pos])
         seen.remove(seen[pos])
@@ -71,7 +71,8 @@ if __name__ == '__main__':
     roads = load_map_from_csv()
     num_problems = 100
     rand_count = 4
-    for i in range(num_problems//rand_count):
-        s = random.randint(0, len(roads))
-        for t in bfs_rand_goal(roads, s, rand_count=4):
-            print(s, t)
+    with open('problems.csv', 'w+') as f:
+        for i in range(num_problems // rand_count):
+            s = random.randint(0, len(roads))
+            for t in bfs_rand_goal(roads, s, rand_count=2):
+                f.write(str(s) + ',' + str(t) + '\n')

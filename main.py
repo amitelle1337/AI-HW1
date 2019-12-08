@@ -7,6 +7,7 @@ We just parse input and call methods from other modules.
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
 import algs
+from utils import est_time
 
 
 def find_ucs_rout(source, target):
@@ -16,7 +17,8 @@ def find_ucs_rout(source, target):
 
 def find_astar_route(source, target):
     'call function to find path, and return list of indices'
-    raise NotImplementedError
+    raise algs.find_astar_route(source, target, f=lambda node: node.path_cost,
+                                h=lambda node1, node2: est_time(node1, node2))
 
 
 def find_idastar_route(source, target):

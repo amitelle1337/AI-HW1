@@ -6,6 +6,5 @@ def ordered_set(coll):
 
 
 def avg_time(link):
-    speed_range = info.SPEED_RANGES[info.TYPE_INDICES.index(link.highway_type)]
-    avg_speed = (speed_range[1] - speed_range[0]) / 2
-    return link.distance / avg_speed
+    top_speed = info.SPEED_RANGES[info.TYPE_INDICES.index(link.highway_type)][1]
+    return link.distance / top_speed

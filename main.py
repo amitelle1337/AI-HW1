@@ -27,6 +27,7 @@ def find_idastar_route(source, target):
 def dispatch(argv):
     from sys import argv
     source, target = int(argv[2]), int(argv[3])
+    path = []
     if argv[1] == 'ucs':
         path = find_ucs_rout(source, target)
     elif argv[1] == 'astar':

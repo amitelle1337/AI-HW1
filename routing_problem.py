@@ -1,20 +1,22 @@
 from ways import load_map_from_csv
 
 
-class RoadsProblem:
+class RoutingProblem:
     roads = None
 
     def __init__(self, source, goal=None, cost=lambda x: 1):
         self.s_start = source
         self.goal = goal
         self.cost = cost
-        if RoadsProblem.roads is None:
-            RoadsProblem.roads = load_map_from_csv()
+        if RoutingProblem.roads is None:
+            RoutingProblem.roads = load_map_from_csv()
 
-    def actions(self, s):
-        return RoadsProblem.roads[s].links
+    @staticmethod
+    def actions(s):
+        return RoutingProblem.roads[s].links
 
-    def succ(self, s, a):
+    @staticmethod
+    def succ(s, a):
         return a.target
 
     def is_goal(self, s):
@@ -24,4 +26,4 @@ class RoadsProblem:
         return self.cost(a)
 
     def __len__(self):
-        return len(RoadsProblem.roads)
+        return len(RoutingProblem.roads)

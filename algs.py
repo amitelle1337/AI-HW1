@@ -1,4 +1,4 @@
-from roads_problem import RoadsProblem
+from routing_problem import RoutingProblem
 from node import Node
 from priority_queue import PriorityQueue
 from utils import avg_time
@@ -25,10 +25,10 @@ def best_first_graph_search(problem, f):
 
 
 def find_ucs_route(source, target, f):
-    problem = RoadsProblem(source, target, cost=avg_time)
+    problem = RoutingProblem(source, target, cost=avg_time)
     return best_first_graph_search(problem, f=f)
 
 
 def find_astar_route(source, target, f, h):
-    problem = RoadsProblem(source, target, cost=avg_time)
+    problem = RoutingProblem(source, target, cost=avg_time)
     return best_first_graph_search(problem, f=lambda x: f(x) + h(x, problem.goal))

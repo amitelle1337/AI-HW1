@@ -25,10 +25,10 @@ def best_first_graph_search(problem, f):
 
 
 def find_ucs_route(source, target, f):
-    problem = RoadsProblem(load_map_from_csv(), source, target, cost=avg_time)
+    problem = RoadsProblem(source, target, cost=avg_time)
     return best_first_graph_search(problem, f=f)
 
 
 def find_astar_route(source, target, f, h):
-    problem = RoadsProblem(load_map_from_csv(), source, target, cost=avg_time)
+    problem = RoadsProblem(source, target, cost=avg_time)
     return best_first_graph_search(problem, f=lambda x: f(x) + h(x, problem.goal))

@@ -1,13 +1,18 @@
-class RoadsProblem:
+from ways import load_map_from_csv
 
-    def __init__(self, roads, source, goal=None, cost=lambda x: 1):
-        self.roads = roads
+
+class RoadsProblem:
+    roads = None
+
+    def __init__(self, source, goal=None, cost=lambda x: 1):
         self.s_start = source
         self.goal = goal
         self.cost = cost
+        if RoadsProblem.roads is None:
+            RoadsProblem.roads = load_map_from_csv()
 
     def actions(self, s):
-        return self.roads[s].links
+        return RoadsProblem.roads[s].links
 
     def succ(self, s, a):
         return a.target
@@ -17,3 +22,6 @@ class RoadsProblem:
 
     def step_cost(self, s, a):
         return self.cost(a)
+
+    def __len__(self):
+        return len(RoadsProblem.roads)

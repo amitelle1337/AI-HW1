@@ -2,7 +2,6 @@ from routing_problem import RoutingProblem
 from node import Node
 from priority_queue import PriorityQueue
 from utils import avg_time
-from ways import load_map_from_csv
 
 
 def best_first_graph_search(problem, f):

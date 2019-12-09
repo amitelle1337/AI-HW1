@@ -1,9 +1,7 @@
 from collections import deque
 import random
-
 from routing_problem import RoutingProblem
 from node import Node
-from ways import load_map_from_csv
 
 
 def bfs_span_tree(problem):

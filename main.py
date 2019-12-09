@@ -18,7 +18,7 @@ def find_ucs_rout(source, target):
 def find_astar_route(source, target):
     'call function to find path, and return list of indices'
     raise algs.find_astar_route(source, target, f=lambda node: node.path_cost,
-                                h=lambda node1, node2: est_time(node1, node2))
+                                h=est_time)
 
 
 def find_idastar_route(source, target):

@@ -27,3 +27,6 @@ class RoutingProblem:
 
     def __len__(self):
         return len(RoutingProblem.roads)
+
+    def __getitem__(self, item):
+        return RoutingProblem.roads[item]

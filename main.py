@@ -17,13 +17,12 @@ def find_ucs_rout(source, target):
 
 def find_astar_route(source, target):
     'call function to find path, and return list of indices'
-    raise algs.find_astar_route(source, target, f=lambda node: node.path_cost,
-                                h=est_time)
+    return algs.find_astar_route(source, target, g=lambda node: node.path_cost, h=est_time)
 
 
 def find_idastar_route(source, target):
     'call function to find path, and return list of indices'
-    raise NotImplementedError
+    return algs.find_idastar_route(source, target, g=lambda node: node.path_cost, h=est_time)
 
 
 def dispatch(argv):

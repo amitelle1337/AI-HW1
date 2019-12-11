@@ -17,7 +17,7 @@ def bfs_span_tree(problem):
     return closed_list
 
 
-def breadth_first_graph_search(problem):
+def bfs_graph(problem):
     frontier = deque([Node(problem.s_start)])  # FIFO queue
     closed_list = set()
     while frontier:
@@ -45,8 +45,7 @@ def bfs_rand_goal(problem, rand_threshhold=200, rand_count=1):
     random.seed(None)
     for _ in range(rand_count):
         pos = random.randint(0, len(seen) - 1)
-        rand_goals.append(seen[pos])
-        seen.remove(seen[pos])
+        rand_goals.append(seen.pop(pos))
     return rand_goals
 
 

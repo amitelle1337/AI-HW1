@@ -35,7 +35,7 @@ def find_astar_route(problem: RoutingProblem) -> (List[int], float):
 
 def find_idastar_route(problem: RoutingProblem) -> (List[int], float):
     start = Node(problem.s_start)
-    f_limit = est_time(problem[start.state], problem[problem.goal])
+    f_limit = est_time(problem[problem.s_start], problem[problem.goal])
     while True:
         sol, f_limit = dfs_countour(start, f_limit, problem, path_cost,
                                     h=lambda node: est_time(problem[node.state], problem[problem.goal]))

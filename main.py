@@ -7,21 +7,26 @@ We just parse input and call methods from other modules.
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
 import algs
+from routing_problem import RoutingProblem
+from utils import avg_time
 
 
 def find_ucs_rout(source, target):
     'call function to find path, and return list of indices'
-    return algs.find_ucs_route(source, target)
+    problem = RoutingProblem(source, target, cost=avg_time)
+    return algs.find_ucs_route(problem)[0]
 
 
 def find_astar_route(source, target):
     'call function to find path, and return list of indices'
-    return algs.find_astar_route(source, target)
+    problem = RoutingProblem(source, target, cost=avg_time)
+    return algs.find_astar_route(problem)[0]
 
 
 def find_idastar_route(source, target):
     'call function to find path, and return list of indices'
-    return algs.find_idastar_route(source, target)
+    problem = RoutingProblem(source, target, cost=avg_time)
+    return algs.find_idastar_route(problem)[0]
 
 
 def dispatch(argv):

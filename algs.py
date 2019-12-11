@@ -5,7 +5,7 @@ from priority_queue import PriorityQueue
 from utils import avg_time, path_cost, est_time
 
 
-def best_first_graph_search(problem: RoutingProblem, f) -> List[int]:
+def best_first_graph_search(problem: RoutingProblem, f) -> (List[int], float):
     node = Node(problem.s_start)
     frontier = PriorityQueue(f)  # Priority Queue
     frontier.append(node)
@@ -13,8 +13,7 @@ def best_first_graph_search(problem: RoutingProblem, f) -> List[int]:
     while frontier:
         node = frontier.pop()
         if problem.is_goal(node.state):
-            print(node.path_cost)
-            return node.solution()
+            return node.solution(), node.path_cost
         closed_list.add(node.state)
         for child in node.expand(problem):
             if child.state not in closed_list and child not in frontier:
@@ -22,31 +21,28 @@ def best_first_graph_search(problem: RoutingProblem, f) -> List[int]:
             elif child in frontier and f(child) < frontier[child]:
                 del frontier[child]
                 frontier.append(child)
-    return None
+    return None, None
 
 
-def find_ucs_route(source: int, target: int) -> List[int]:
-    problem = RoutingProblem(source, target, cost=avg_time)
+def find_ucs_route(problem: RoutingProblem) -> (List[int], float):
     return best_first_graph_search(problem, f=path_cost)
 
 
-def find_astar_route(source: int, target: int) -> List[int]:
-    problem = RoutingProblem(source, target, cost=avg_time)
+def find_astar_route(problem: RoutingProblem) -> (List[int], float):
     return best_first_graph_search(problem, f=lambda node: path_cost(node) + est_time(problem[node.state],
                                                                                       problem[problem.goal]))
 
 
-def find_idastar_route(source: int, target: int) -> List[int]:
-    problem = RoutingProblem(source, target, cost=avg_time)
+def find_idastar_route(problem: RoutingProblem) -> (List[int], float):
     start = Node(problem.s_start)
-    f_limit = h(problem[start.state], problem[problem.goal])
+    f_limit = est_time(problem[start.state], problem[problem.goal])
     while True:
         sol, f_limit = dfs_countour(start, f_limit, problem, path_cost,
                                     h=lambda node: est_time(problem[node.state], problem[problem.goal]))
         if sol is not None:
-            return sol
+            return sol, f_limit
         if f_limit is float('Inf'):
-            return None
+            return None, None
 
 
 def dfs_countour(node: Node, f_limit: float, problem: RoutingProblem, g, h) -> (List[int], float):

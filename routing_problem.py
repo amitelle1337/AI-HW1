@@ -2,14 +2,12 @@ from ways import load_map_from_csv
 
 
 class RoutingProblem:
-    roads = None
+    roads = load_map_from_csv()
 
     def __init__(self, source, goal=None, cost=lambda x: 1):
         self.s_start = source
         self.goal = goal
         self.cost = cost
-        if RoutingProblem.roads is None:
-            RoutingProblem.roads = load_map_from_csv()
 
     @staticmethod
     def actions(s):

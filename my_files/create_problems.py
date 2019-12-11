@@ -1,8 +1,8 @@
 import csv
 from collections import deque
 import random
-from routing_problem import RoutingProblem
-from node import Node
+from my_files.routing_problem import RoutingProblem
+from my_files.node import Node
 
 
 def bfs_span_tree(problem):
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     num_problems = 100
     rand_count = 2
     prob = RoutingProblem(None)
-    with open('problems.csv', 'w+', newline='') as problem_file:
+    with open('../problems.csv', 'w+', newline='') as problem_file:
         problem_writer = csv.writer(problem_file)
         for i in range(num_problems // rand_count):
             s = random.randint(0, len(prob))

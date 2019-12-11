@@ -6,9 +6,9 @@ We just parse input and call methods from other modules.
 
 # do NOT import ways. This should be done from other files
 # simply import your modules and call the appropriate functions
-import algs
-from routing_problem import RoutingProblem
-from utils import avg_time
+from my_files import algs
+from my_files.routing_problem import RoutingProblem
+from my_files.utils import avg_time
 
 
 def find_ucs_rout(source, target):

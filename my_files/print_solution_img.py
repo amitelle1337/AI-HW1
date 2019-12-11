@@ -1,12 +1,12 @@
 import csv
 import random
-import algs
-from routing_problem import RoutingProblem
+from my_files import algs
+from my_files.routing_problem import RoutingProblem
 from ways import draw
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    with open('problems.csv', 'r', newline='') as problem_file:
+    with open('../problems.csv', 'r', newline='') as problem_file:
         problem_reader = csv.reader(problem_file)
         rows = [row for row in problem_reader]
         for i in range(5):

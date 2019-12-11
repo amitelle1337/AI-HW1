@@ -1,8 +1,8 @@
 from typing import List
-from routing_problem import RoutingProblem
-from node import Node
-from priority_queue import PriorityQueue
-from utils import avg_time, path_cost, est_time
+from my_files.routing_problem import RoutingProblem
+from my_files.node import Node
+from my_files.priority_queue import PriorityQueue
+from my_files.utils import path_cost, est_time
 
 
 def best_first_graph_search(problem: RoutingProblem, f) -> (List[int], float):

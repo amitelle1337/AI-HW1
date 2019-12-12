@@ -32,9 +32,10 @@ def calc_mean_std(alg_name: str) -> (float, float):
 
 
 def main():
-    print(calc_mean_std('ucs'))
-    print(calc_mean_std('astar'))
-    print(calc_mean_std('idastar'))
+    algs = ['ucs', 'astar', 'idastar']
+    for alg in algs:
+        res = calc_mean_std(alg)
+        print('{}: avg = {}, std = {}'.format(alg, res[0], res[1]))
 
 
 if __name__ == '__main__':

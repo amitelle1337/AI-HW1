@@ -34,9 +34,9 @@ def write_results(alg_name: str):
 
 
 def main():
-    write_results('ucs')
-    write_results('astar')
-    write_results('idastar')
+    algs = ['ucs', 'astar', 'idastar']
+    for alg in algs:
+        write_results(alg)
 
 
 if __name__ == '__main__':

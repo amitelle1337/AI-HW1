@@ -37,25 +37,26 @@ def find_idastar_route(problem: RoutingProblem) -> (List[int], float):
     start = Node(problem.s_start)
     f_limit = est_time(problem[problem.s_start], problem[problem.goal])
     while True:
-        sol, f_limit = dfs_countour(start, f_limit, problem, path_cost,
-                                    h=lambda node: est_time(problem[node.state], problem[problem.goal]))
+        sol, f_limit = search(problem, start, f_limit, path_cost,
+                              lambda n: est_time(problem[n.state], problem[problem.goal]), set())
         if sol is not None:
             return sol, f_limit
         if f_limit is float('Inf'):
             return None, None
 
 
-def dfs_countour(node: Node, f_limit: float, problem: RoutingProblem, g, h) -> (List[int], float):
+def search(problem: RoutingProblem, node: Node, f_limit: float, g, h, seen: set) -> (List[int], float):
+    seen.add(node.state)
     f = g(node) + h(node)
     if f > f_limit:
         return None, f
-    if problem.goal is node.state:
-        return node.solution(), f_limit
+    if node.state == problem.goal:
+        return node.solution(), f
     next_f = float('Inf')
     for s in node.expand(problem):
-        if s not in node.path():
-            sol, new_f = dfs_countour(s, f_limit, problem, g, h)
+        if s.state not in seen:
+            sol, new_f = search(problem, s, f_limit, g, h, seen)
             if sol is not None:
-                return sol, f_limit
+                return sol, new_f
             next_f = min(next_f, new_f)
     return None, next_f

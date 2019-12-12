@@ -13,8 +13,8 @@ def avg_time(link) -> float:
 
 def est_time(junc1, junc2) -> float:
     top_speed = max([speed_range[1] for speed_range in info.SPEED_RANGES])
-    top_speed *= 1000  # converts to meters per hour
-    return compute_distance(junc1.lat, junc1.lon, junc2.lat, junc2.lon) / top_speed
+    distnace = compute_distance(junc1.lat, junc1.lon, junc2.lat, junc2.lon)
+    return distnace / top_speed
 
 
 def path_cost(node) -> float:

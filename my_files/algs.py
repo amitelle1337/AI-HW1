@@ -53,8 +53,9 @@ def dfs_countour(node: Node, f_limit: float, problem: RoutingProblem, g, h) -> (
         return node.solution(), f_limit
     next_f = float('Inf')
     for s in node.expand(problem):
-        sol, new_f = dfs_countour(s, f_limit, problem, g, h)
-        if sol is not None:
-            return sol, f_limit
-        next_f = min(next_f, new_f)
+        if s not in node.path():
+            sol, new_f = dfs_countour(s, f_limit, problem, g, h)
+            if sol is not None:
+                return sol, f_limit
+            next_f = min(next_f, new_f)
     return None, next_f

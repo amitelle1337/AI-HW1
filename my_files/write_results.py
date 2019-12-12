@@ -1,6 +1,6 @@
 import csv
 from my_files.routing_problem import RoutingProblem
-from my_files.utils import est_time
+from my_files.utils import est_time, avg_time
 from my_files import algs
 
 
@@ -17,14 +17,14 @@ def write_results(alg_name: str):
     else:
         raise Exception('Invalid Algorithm')
 
-    with open(file_name, 'w+', newline='') as result_file, open('problems.csv', 'r', newline='') as problem_file:
+    with open(file_name, 'w+', newline='') as result_file, open('problems.csv', 'r') as problem_file:
         problem_reader = csv.reader(problem_file)
         result_writer = csv.writer(result_file)
         lines = 0
         for row in problem_reader:
             s, t = int(row[0]), int(row[1])
             print(alg_name, s, t)
-            problem = RoutingProblem(s, t)
+            problem = RoutingProblem(s, t, cost=avg_time)
             if alg_name == 'astar' or alg_name == 'idastar':
                 result_writer.writerow([est_time(problem[s], problem[t]), alg(problem)[1]])
             else:

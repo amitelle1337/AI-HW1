@@ -3,6 +3,7 @@ import time
 from my_files import algs
 from statistics import stdev, mean
 from my_files.routing_problem import RoutingProblem
+from my_files.utils import avg_time
 
 
 def calc_mean_std(alg_name: str) -> (float, float):
@@ -16,11 +17,11 @@ def calc_mean_std(alg_name: str) -> (float, float):
         raise Exception('Invalid Algorithm')
 
     results = []
-    with open('../problems.csv', 'r', newline='') as problem_file:
+    with open('problems.csv', 'r') as problem_file:
         problem_reader = csv.reader(problem_file)
         for row in problem_reader:
             s, t = int(row[0]), int(row[1])
-            problem = RoutingProblem(s, t)
+            problem = RoutingProblem(s, t, cost=avg_time)
             start = time.time()
             _ = alg(problem)
             end = time.time()

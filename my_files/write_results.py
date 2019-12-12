@@ -19,16 +19,16 @@ def write_results(alg_name: str):
 
     with open(file_name, 'w+') as result_file, open('../problems.csv', 'r', newline='') as problem_file:
         problem_reader = csv.reader(problem_file)
+        result_writer = csv.writer(result_file)
         lines = 0
         for row in problem_reader:
             s, t = int(row[0]), int(row[1])
             problem = RoutingProblem(s, t)
             if alg_name == 'astar' or alg_name == 'idastar':
-                output_row = '{}, {}\n'.format(est_time(problem[s], problem[t]), alg(problem)[1])
+                result_writer.writerow([est_time(problem[s], problem[t]), alg(problem)[1]])
             else:
-                output_row = '{}\n'.format(alg(problem)[1])
+                result_writer.writerow([alg(problem)[1]])
             lines += 1
-            result_file.write(output_row)
             if alg_name == 'idastar' and lines is 5:
                 break
 

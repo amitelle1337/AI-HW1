@@ -69,4 +69,4 @@ if __name__ == '__main__':
             s = random.randint(0, len(prob))
             prob = RoutingProblem(s)
             for t in bfs_rand_goal(prob, rand_count=rand_count):
-                problem_writer.writerow([s, ' ' + str(t)])
+                problem_writer.writerow([s, t])

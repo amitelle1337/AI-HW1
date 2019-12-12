@@ -23,7 +23,6 @@ def write_results(alg_name: str):
         lines = 0
         for row in problem_reader:
             s, t = int(row[0]), int(row[1])
-            print(alg_name, s, t)
             problem = RoutingProblem(s, t, cost=avg_time)
             if alg_name == 'astar' or alg_name == 'idastar':
                 result_writer.writerow([est_time(problem[s], problem[t]), alg(problem)[1]])

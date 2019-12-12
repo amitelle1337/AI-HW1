@@ -26,10 +26,16 @@ def calc_mean_std(alg_name: str) -> (float, float):
             _ = alg(problem)
             end = time.time()
             results.append(end - start)
-            if alg_name == 'idastar' and len(results) is 5:
+            if alg_name == 'idastar' and len(results) is 10:
                 break
     return mean(results), stdev(results)
 
 
-if __name__ == '__main__':
+def main():
+    print(calc_mean_std('ucs'))
+    print(calc_mean_std('astar'))
     print(calc_mean_std('idastar'))
+
+
+if __name__ == '__main__':
+    main()

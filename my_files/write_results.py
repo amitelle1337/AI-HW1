@@ -29,11 +29,15 @@ def write_results(alg_name: str):
             else:
                 result_writer.writerow([alg(problem)[1]])
             lines += 1
-            if alg_name == 'idastar' and lines is 5:
+            if alg_name == 'idastar' and lines is 10:
                 break
 
 
-if __name__ == '__main__':
+def main():
     write_results('ucs')
     write_results('astar')
     write_results('idastar')
+
+
+if __name__ == '__main__':
+    main()

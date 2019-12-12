@@ -34,29 +34,26 @@ def find_astar_route(problem: RoutingProblem) -> (List[int], float):
 
 
 def find_idastar_route(problem: RoutingProblem) -> (List[int], float):
+    def search(problem: RoutingProblem, node: Node, f_limit: float, g, h) -> (List[int], float):
+        f = g(node) + h(node)
+        if f > f_limit:
+            return None, f
+        if node.state == problem.goal:
+            return node.solution(), f
+        next_f = float('Inf')
+        for s in node.expand(problem):
+            sol, new_f = search(problem, s, f_limit, g, h)
+            if sol is not None:
+                return sol, new_f
+            next_f = min(next_f, new_f)
+        return None, next_f
+
     start = Node(problem.s_start)
     f_limit = est_time(problem[problem.s_start], problem[problem.goal])
     while True:
         sol, f_limit = search(problem, start, f_limit, path_cost,
-                              lambda n: est_time(problem[n.state], problem[problem.goal]), set())
+                              lambda n: est_time(problem[n.state], problem[problem.goal]))
         if sol is not None:
             return sol, f_limit
         if f_limit is float('Inf'):
             return None, None
-
-
-def search(problem: RoutingProblem, node: Node, f_limit: float, g, h, seen: set) -> (List[int], float):
-    seen.add(node.state)
-    f = g(node) + h(node)
-    if f > f_limit:
-        return None, f
-    if node.state == problem.goal:
-        return node.solution(), f
-    next_f = float('Inf')
-    for s in node.expand(problem):
-        if s.state not in seen:
-            sol, new_f = search(problem, s, f_limit, g, h, seen)
-            if sol is not None:
-                return sol, new_f
-            next_f = min(next_f, new_f)
-    return None, next_f

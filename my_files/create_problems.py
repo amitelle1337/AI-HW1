@@ -2,9 +2,9 @@ import csv
 from collections import deque
 import random
 
-from my_files import algs
 from my_files.routing_problem import RoutingProblem
 from my_files.node import Node
+from my_files.utils import est_time
 
 
 def bfs_span_tree(problem):
@@ -58,18 +58,28 @@ def find_state(state, node_list):
     return False
 
 
-if __name__ == '__main__':
+def main():
     from sys import argv
 
     assert len(argv) == 1
     num_problems = 100
     rand_count = 2
     problem = RoutingProblem(None)
+    probs = []
+
+    for i in range(num_problems // rand_count):
+        s = random.randint(0, len(problem))
+        problem = RoutingProblem(s)
+        for t in bfs_rand_goal(problem, rand_count=rand_count):
+            probs.append((s, t))
+
+    probs.sort(key=lambda p: est_time(problem[p[0]], problem[p[1]]))
 
     with open('../problems.csv', 'w+', newline='') as problem_file:
         problem_writer = csv.writer(problem_file)
-        for i in range(num_problems // rand_count):
-            s = random.randint(0, len(problem))
-            problem = RoutingProblem(s)
-            for t in bfs_rand_goal(problem, rand_count=rand_count):
-                problem_writer.writerow([s, t])
+        for p in probs:
+            problem_writer.writerow(p)
+
+
+if __name__ == '__main__':
+    main()

@@ -7,18 +7,6 @@ from my_files.node import Node
 from my_files.utils import est_time
 
 
-def bfs_span_tree(problem):
-    frontier = deque([Node(problem.s_start)])  # FIFO queue
-    closed_list = set()
-    while frontier:
-        node = frontier.popleft()
-        closed_list.add(node.state)
-        for child in node.expand(problem):
-            if child.state not in closed_list and child not in frontier:
-                frontier.append(child)
-    return closed_list
-
-
 def bfs_graph(problem):
     frontier = deque([Node(problem.s_start)])  # FIFO queue
     closed_list = set()
@@ -33,7 +21,19 @@ def bfs_graph(problem):
     return None
 
 
-def bfs_rand_goal(problem, rand_threshhold=200, rand_count=1):
+def bfs_span_tree(problem):
+    frontier = deque([Node(problem.s_start)])  # FIFO queue
+    closed_list = set()
+    while frontier:
+        node = frontier.popleft()
+        closed_list.add(node.state)
+        for child in node.expand(problem):
+            if child.state not in closed_list and child not in frontier:
+                frontier.append(child)
+    return closed_list
+
+
+def bfs_rand_goal(problem, rand_threshhold=100, rand_count=1):
     frontier = deque([Node(problem.s_start)])  # FIFO queue
     closed_list = set()
     while frontier and len(frontier) + len(closed_list) < rand_threshhold:
@@ -51,13 +51,6 @@ def bfs_rand_goal(problem, rand_threshhold=200, rand_count=1):
     return rand_goals
 
 
-def find_state(state, node_list):
-    for node in node_list:
-        if node.state is state:
-            return True
-    return False
-
-
 def main():
     from sys import argv
 
@@ -68,9 +61,9 @@ def main():
     probs = []
 
     for i in range(num_problems // rand_count):
-        s = random.randint(0, len(problem))
+        s = random.randint(0, len(problem) - 1)
         problem = RoutingProblem(s)
-        for t in bfs_rand_goal(problem, rand_count=rand_count):
+        for t in bfs_rand_goal(problem, rand_threshhold=1000, rand_count=rand_count):
             probs.append((s, t))
 
     probs.sort(key=lambda p: est_time(problem[p[0]], problem[p[1]]))

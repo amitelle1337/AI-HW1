@@ -16,9 +16,9 @@ def main():
             row = rows.pop(idx)
             s, t = int(row[0]), int(row[1])
             problem = RoutingProblem(s, t, cost=avg_time)
+            plt.clf()
             draw.plot_path(problem.roads, algs.find_astar_route(problem)[0])
             plt.savefig('sulotions_img/plot_{}_{}.png'.format(s, t))
-            plt.clf()
 
 
 if __name__ == '__main__':

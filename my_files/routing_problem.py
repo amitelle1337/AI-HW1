@@ -15,13 +15,17 @@ class RoutingProblem:
 
     @staticmethod
     def succ(s, a):
-        return a.target
+        if s == a.source:
+            return a.target
+        raise Exception('Not Valid Operation')
 
     def is_goal(self, s):
         return s == self.goal
 
     def step_cost(self, s, a):
-        return self.cost(a)
+        if s == a.source:
+            return self.cost(a)
+        raise Exception('Not Valid Operation')
 
     def __len__(self):
         return len(RoutingProblem.roads)

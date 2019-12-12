@@ -12,7 +12,7 @@ def main():
         problem_reader = csv.reader(problem_file)
         rows = [row for row in problem_reader]
         for i in range(5):
-            idx = random.randint(0, len(rows))
+            idx = random.randint(0, len(rows) - 1)
             row = rows.pop(idx)
             s, t = int(row[0]), int(row[1])
             problem = RoutingProblem(s, t, cost=avg_time)

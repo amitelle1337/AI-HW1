@@ -68,7 +68,7 @@ def main():
 
     probs.sort(key=lambda p: est_time(problem[p[0]], problem[p[1]]))
 
-    with open('../problems.csv', 'w+', newline='') as problem_file:
+    with open('problems.csv', 'w+', newline='') as problem_file:
         problem_writer = csv.writer(problem_file)
         for p in probs:
             problem_writer.writerow(p)

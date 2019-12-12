@@ -18,7 +18,8 @@ def main():
             problem = RoutingProblem(s, t, cost=avg_time)
             plt.clf()
             draw.plot_path(problem.roads, algs.find_astar_route(problem)[0])
-            plt.savefig('sulotions_img/plot_{}_{}.png'.format(s, t))
+            plt.title('{} to {}'.format(s, t))
+            plt.savefig('sulotions_img/plot_{}.png'.format(i))
 
 
 if __name__ == '__main__':

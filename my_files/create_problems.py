@@ -63,7 +63,7 @@ def main():
     for i in range(num_problems // rand_count):
         s = random.randint(0, len(problem) - 1)
         problem = RoutingProblem(s)
-        for t in bfs_rand_goal(problem, rand_threshhold=5000, rand_count=rand_count):
+        for t in bfs_rand_goal(problem, rand_threshhold=2000, rand_count=rand_count):
             probs.append((s, t))
 
     probs.sort(key=lambda p: est_time(problem[p[0]], problem[p[1]]))
